@@ -1,0 +1,43 @@
+name: Build Android app
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build debug APK
+        run: gradle assembleDebug --no-daemon
+
+      - name: Keep a copy as a build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kharcha-diary-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Publish the APK as a release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk KharchaDiary.apk
+          gh release create "build-${{ github.run_number }}" KharchaDiary.apk \
+            --title "Kharcha Diary build ${{ github.run_number }}" \
+            --notes "Download KharchaDiary.apk on your Android phone and open it to install." \
+            --latest
