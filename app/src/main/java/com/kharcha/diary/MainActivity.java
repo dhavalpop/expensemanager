@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -290,37 +292,75 @@ public class MainActivity extends Activity {
 
         @JavascriptInterface
         public String saveFile(String name, String mime, String data) {
-            try {
-                byte[] bytes = data.getBytes("UTF-8");
-                if (Build.VERSION.SDK_INT >= 29) {
-                    ContentValues v = new ContentValues();
-                    v.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
-                    v.put(MediaStore.MediaColumns.MIME_TYPE, mime);
-                    v.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
-                    Uri u = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, v);
-                    if (u == null) return "error";
-                    OutputStream os = getContentResolver().openOutputStream(u);
-                    if (os == null) return "error";
-                    try {
-                        os.write(bytes);
-                    } finally {
-                        os.close();
-                    }
-                } else {
-                    File dir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-                    if (dir == null) return "error";
-                    dir.mkdirs();
-                    FileOutputStream fo = new FileOutputStream(new File(dir, name));
-                    try {
-                        fo.write(bytes);
-                    } finally {
-                        fo.close();
+            return writeDownload(name, mime, data, false);
+        }
+
+        /** Keeps one backup copy in the Downloads folder, so data can be restored after an uninstall. */
+        @JavascriptInterface
+        public String autoBackup(String json) {
+            return writeDownload("KharchaDiary-backup.json", "application/json", json, true);
+        }
+    }
+
+    private String writeDownload(String name, String mime, String data, boolean overwrite) {
+        try {
+            byte[] bytes = data.getBytes("UTF-8");
+            if (Build.VERSION.SDK_INT >= 29) {
+                Uri base = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+                Uri target = null;
+                if (overwrite) {
+                    Cursor c = getContentResolver().query(base, new String[]{MediaStore.MediaColumns._ID},
+                            MediaStore.MediaColumns.DISPLAY_NAME + "=?", new String[]{name}, null);
+                    if (c != null) {
+                        try {
+                            if (c.moveToFirst()) target = ContentUris.withAppendedId(base, c.getLong(0));
+                        } finally {
+                            c.close();
+                        }
                     }
                 }
-                return "ok";
-            } catch (Exception e) {
-                return "error";
+                if (target != null) {
+                    try {
+                        OutputStream os = getContentResolver().openOutputStream(target, "wt");
+                        if (os != null) {
+                            try {
+                                os.write(bytes);
+                            } finally {
+                                os.close();
+                            }
+                            return "ok";
+                        }
+                    } catch (Exception ignored) {
+                        // fall through and create a new file
+                    }
+                }
+                ContentValues v = new ContentValues();
+                v.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
+                v.put(MediaStore.MediaColumns.MIME_TYPE, mime);
+                v.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+                Uri u = getContentResolver().insert(base, v);
+                if (u == null) return "error";
+                OutputStream os = getContentResolver().openOutputStream(u);
+                if (os == null) return "error";
+                try {
+                    os.write(bytes);
+                } finally {
+                    os.close();
+                }
+            } else {
+                File dir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+                if (dir == null) return "error";
+                dir.mkdirs();
+                FileOutputStream fo = new FileOutputStream(new File(dir, name));
+                try {
+                    fo.write(bytes);
+                } finally {
+                    fo.close();
+                }
             }
+            return "ok";
+        } catch (Exception e) {
+            return "error";
         }
     }
 }

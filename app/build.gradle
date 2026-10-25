@@ -6,12 +6,24 @@ android {
     namespace 'com.kharcha.diary'
     compileSdk 34
 
+    // One fixed signing key for every build. Android only installs a new APK over the old app
+    // (keeping all your data) when both were signed with the same key.
+    signingConfigs {
+        debug {
+            storeFile rootProject.file('signing/kharcha.jks')
+            storePassword 'kharcha-diary'
+            keyAlias 'kharcha'
+            keyPassword 'kharcha-diary'
+        }
+    }
+
     defaultConfig {
         applicationId "com.kharcha.diary"
         minSdk 26
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        // Goes up with every online build, so each new APK counts as an update.
+        versionCode Integer.parseInt(System.getenv('GITHUB_RUN_NUMBER') ?: '1')
+        versionName "1." + (System.getenv('GITHUB_RUN_NUMBER') ?: '0')
     }
 
     buildTypes {

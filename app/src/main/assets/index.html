@@ -9,17 +9,20 @@
   --accent:#0F5C63; --accent-ink:#FFFFFF;
   --inc:#1F7F4C; --exp:#CC4A34; --inv:#5148C4; --warn:#A96A0E;
   --shadow:0 1px 2px rgba(18,32,27,.06),0 6px 18px rgba(18,32,27,.06);
+  --n0:#D5EBE0; --n1:#D6E6F5; --n2:#F2E5C4; --n3:#F5D8D8; --n4:#E4DCF4; --n5:#E3E9E6;
   --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --font-body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0D1412; --surface:#151E1B; --surface2:#1B2723; --ink:#E7EFEB; --muted:#93A39C; --line:#2A3833;
   --accent:#55B8C2; --accent-ink:#04181B; --inc:#4CC585; --exp:#F0836E; --inv:#A199F4; --warn:#E3B04B;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3); color-scheme:dark;}}
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3); color-scheme:dark;
+  --n0:#1E3A30; --n1:#1E3347; --n2:#3F3720; --n3:#472B2B; --n4:#32294A; --n5:#232D2A;}}
 :root[data-theme="dark"]{
   --bg:#0D1412; --surface:#151E1B; --surface2:#1B2723; --ink:#E7EFEB; --muted:#93A39C; --line:#2A3833;
   --accent:#55B8C2; --accent-ink:#04181B; --inc:#4CC585; --exp:#F0836E; --inv:#A199F4; --warn:#E3B04B;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3); color-scheme:dark;}
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3); color-scheme:dark;
+  --n0:#1E3A30; --n1:#1E3347; --n2:#3F3720; --n3:#472B2B; --n4:#32294A; --n5:#232D2A;}
 *{box-sizing:border-box}
 html,body{min-height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:0}
@@ -120,7 +123,7 @@ th{font-weight:600;color:var(--muted);font-size:.74rem;text-transform:uppercase;
 .sheet-head{display:flex;justify-content:space-between;align-items:center}
 .sheet-head button{width:36px;height:36px;border-radius:50%;border:0;background:var(--surface2);font-size:1.3rem;line-height:1}
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center}
-.nav-in{display:grid;grid-template-columns:repeat(5,1fr);width:100%;max-width:560px;align-items:center}
+.nav-in{display:grid;grid-template-columns:repeat(6,1fr);width:100%;max-width:560px;align-items:center}
 .nav button{background:transparent;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.7rem;color:var(--muted);padding:6px 0;min-height:48px}
 .nav button.on{color:var(--accent);font-weight:600}
 .nav button.add{color:var(--accent-ink)}
@@ -165,6 +168,32 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;str
 .ins b{font-weight:600}
 .ins p{margin:2px 0 0;color:var(--muted);font-size:.88rem}
 .ins+.ins{border-top:1px solid var(--line);padding-top:10px}
+.ngrid{columns:2 150px;column-gap:12px;margin-top:12px}
+.ncard{break-inside:avoid;margin:0 0 12px;display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:var(--nbg);color:var(--ink);position:relative;cursor:pointer;border:1px solid color-mix(in srgb,var(--ink) 9%,transparent)}
+.ncard h4{margin:0;font-family:var(--font-display);font-size:1.04rem;line-height:1.25;padding-right:22px;overflow-wrap:anywhere}
+.ncard p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden;font-size:.9rem}
+.nmeta{display:flex;justify-content:space-between;gap:8px;font-size:.74rem;color:var(--muted)}
+.npin{position:absolute;top:11px;right:11px;opacity:.75;display:block;line-height:0}
+.npin svg{width:16px;height:16px}
+.nc0{--nbg:var(--n0)} .nc1{--nbg:var(--n1)} .nc2{--nbg:var(--n2)} .nc3{--nbg:var(--n3)} .nc4{--nbg:var(--n4)} .nc5{--nbg:var(--n5)}
+.nchk{display:flex;gap:9px;align-items:flex-start;text-align:left;background:transparent;border:0;padding:3px 0;font-size:.88rem;min-width:0;width:100%}
+.nchk i{flex:0 0 auto;width:18px;height:18px;border-radius:6px;border:2px solid var(--muted);margin-top:1px;position:relative}
+.nchk.done i{background:var(--accent);border-color:var(--accent)}
+.nchk.done i::after{content:'';position:absolute;left:4px;top:0;width:5px;height:10px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.nchk.done span{text-decoration:line-through;color:var(--muted)}
+.nchk span{min-width:0;overflow-wrap:anywhere}
+.nbar{height:6px;background:color-mix(in srgb,var(--ink) 10%,transparent)}
+.swatches{display:flex;gap:12px;flex-wrap:wrap;padding:4px}
+.sw{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);background:var(--nbg)}
+.sw.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
+.nitem{display:flex;gap:6px;align-items:center}
+.nitem .in{flex:1;min-width:0}
+.nitem .nchk{width:auto;padding:8px}
+.xbtn{flex:0 0 auto;width:38px;height:38px;border:0;border-radius:50%;background:var(--surface2);font-size:1.2rem}
+.nitems{display:flex;flex-direction:column;gap:6px}
+.seg.acc button.on{background:var(--accent);color:var(--accent-ink)}
+textarea.in{resize:vertical;min-height:150px;line-height:1.5}
+.ntitle{font-family:var(--font-display);font-size:1.15rem;font-weight:600}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}}
 </style>
@@ -173,11 +202,13 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;str
 <div class="wrap" id="app"></div>
 <div id="sheet" hidden><div id="sheet-bg"></div><div class="sheet" role="dialog" aria-modal="true" id="sheet-body"></div></div>
 <div id="toast" hidden></div>
+<input type="file" id="restore" accept=".json,application/json" hidden>
 <nav class="nav" aria-label="Main"><div class="nav-in">
   <button data-tab="home"><svg class="ic" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
   <button data-tab="reports"><svg class="ic" viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Reports</button>
   <button class="add" data-act="add" aria-label="Add entry"><span class="fab"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
   <button data-tab="rem"><svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Reminders<span class="bd" id="bd" hidden></span></button>
+  <button data-tab="notes"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v9l-6 6H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 20v-5a1 1 0 0 1 1-1h5"/></svg>Notes</button>
   <button data-tab="plan"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>Plan</button>
 </div></nav>
 
@@ -210,7 +241,7 @@ var DEF={
 var TYPE_NAME={e:'Expense',i:'Income',v:'Invest'};
 var PAYS=['UPI','Cash','Debit card','Credit card','Net banking','Auto-debit','Bank'];
 var S={tx:[],cfg:null,tab:'home',month:ym(today()),rep:'daily',day:today(),year:today().slice(0,4),q:'',ft:'all',fc:'all',ready:false,mode:'local',confirm:''};
-function blankCfg(){return {budgets:{},goals:[],rec:[],inst:{},rem:[],custom:{e:[],i:[],v:[]}}}
+function blankCfg(){return {budgets:{},goals:[],rec:[],inst:{},rem:[],notes:[],custom:{e:[],i:[],v:[]}}}
 S.cfg=blankCfg();
 function normCfg(){var c=S.cfg||{};var b=blankCfg();Object.keys(b).forEach(function(k){if(c[k]==null)c[k]=b[k]});['e','i','v'].forEach(function(k){if(!c.custom[k])c.custom[k]=[]});S.cfg=c}
 function catNames(t){return DEF[t].map(function(x){return x[0]}).concat(S.cfg.custom[t]||[])}
@@ -220,9 +251,17 @@ function hue(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;
 /* ---------- storage ---------- */
 var LS='kharcha-diary-v1',dbh=null,uidv=null,saveQ=Promise.resolve(),dirty={},cfgDirty=false;
 function lsWrite(){try{localStorage.setItem(LS,JSON.stringify({tx:S.tx,cfg:S.cfg}))}catch(e){}}
+var abT=null;
+function queueBackup(){
+  clearTimeout(abT);
+  abT=setTimeout(function(){
+    if(!S.tx.length&&!S.cfg.notes.length&&!S.cfg.rem.length&&!S.cfg.goals.length)return;
+    try{AndroidBridge.autoBackup(JSON.stringify({app:'kharcha-diary',tx:S.tx,cfg:S.cfg}))}catch(e){}
+  },4000);
+}
 function lsRead(){try{return JSON.parse(localStorage.getItem(LS)||'null')}catch(e){return null}}
 function persist(months,cfg){
-  (months||[]).forEach(function(m){dirty[m]=1});if(cfg)cfgDirty=true;lsWrite();if((PWA||APK)&&cfg)syncSchedule();
+  (months||[]).forEach(function(m){dirty[m]=1});if(cfg)cfgDirty=true;lsWrite();if((PWA||APK)&&cfg)syncSchedule();if(APK)queueBackup();
   if(!dbh||!uidv)return;
   saveQ=saveQ.then(flush).catch(function(){toast('Could not sync. Saved on this device.')});
 }
@@ -313,7 +352,7 @@ function viewHome(){
   var list=inMonth(S.month),T=totals(list),left=T.i-T.e-T.v,t=today();
   var h='<div class="top"><span class="brand">Kharcha Diary</span>'+monthbar()+'</div>'+remTop();
   if(!S.tx.length){
-    return h+'<div class="card empty"><h3>Your diary is empty</h3><p class="muted">Add what you spent or earned today. It takes a few seconds, and reports build themselves.</p><div class="btns"><button class="btn" data-act="add">Add first entry</button><button class="btn ghost" data-act="sample">Try sample months</button></div></div>';
+    return h+'<div class="card empty"><h3>Your diary is empty</h3><p class="muted">Add what you spent or earned today. It takes a few seconds, and reports build themselves.</p><div class="btns"><button class="btn" data-act="add">Add first entry</button><button class="btn ghost" data-act="sample">Try sample months</button><button class="btn ghost" data-act="restorebtn">Restore backup</button></div></div>';
   }
   h+='<div class="hero"><div><div class="lbl">Left this month</div><div class="big tt">'+inr(left)+'</div></div><div class="trio"><div><span>Income</span><b class="tt">'+inr(T.i)+'</b></div><div><span>Spent</span><b class="tt">'+inr(T.e)+'</b></div><div><span>Invested</span><b class="tt">'+inr(T.v)+'</b></div></div>';
   var foot=[];if(T.i>0)foot.push('Saved '+Math.round((T.i-T.e)/T.i*100)+'% of income, including investments');
@@ -450,7 +489,7 @@ function viewSave(){
   /* repeating */
   h+='<div class="card"><h3>Repeating entries</h3>'+(S.cfg.rec.length?S.cfg.rec.map(function(r){return '<div class="row" style="padding:6px 0;border:0"><span class="rmain"><b>'+esc(r.c)+' · '+inr(r.a)+'</b><small>'+TYPE_NAME[r.t]+', day '+r.day+' of every month</small></span><button class="btn '+(S.confirm===r.id?'danger':'ghost')+' sm" data-act="delrec" data-id="'+esc(r.id)+'">'+(S.confirm===r.id?'Tap to confirm':'Stop')+'</button></div>'}).join(''):'<p class="muted">Rent, SIP, LIC and similar payments can repeat each month. Turn on "Repeat every month" when you add one.</p>')+'</div>';
   /* data */
-  h+='<div class="card"><h3>Data and backup</h3><p class="muted">'+(S.mode==='sync'?'Saved to your Claude account and private to you.':((PWA||APK)?'Saved on this phone. Export a backup now and then, in case browser data is cleared.':'Saved on this device only. Open the page signed in to Claude to keep it safe across devices.'))+'</p><div class="btns"><button class="btn ghost sm" data-act="export">Export CSV</button><button class="btn ghost sm" data-act="backup">Backup file</button><button class="btn ghost sm" data-act="restorebtn">Restore backup</button></div><input type="file" id="restore" accept=".json,application/json" hidden>'
+  h+='<div class="card"><h3>Data and backup</h3><p class="muted">'+(S.mode==='sync'?'Saved to your Claude account and private to you.':((PWA||APK)?'Saved on this phone. Export a backup now and then, in case browser data is cleared.':'Saved on this device only. Open the page signed in to Claude to keep it safe across devices.'))+'</p><div class="btns"><button class="btn ghost sm" data-act="export">Export CSV</button><button class="btn ghost sm" data-act="backup">Backup file</button><button class="btn ghost sm" data-act="restorebtn">Restore backup</button></div>'+(APK?'<p class="note">Automatic backup: after every change a copy is saved in your Downloads folder as KharchaDiary-backup.json. If you ever uninstall the app, choose Restore backup and pick that file.</p>':'')
    +(hasSample()?'<button class="btn ghost sm" data-act="clearsample">Clear sample entries</button>':(S.tx.length?'':'<button class="btn ghost sm" data-act="sample">Load sample months</button>'))
    +(S.tx.length?'<button class="btn '+(S.confirm==='all'?'danger':'ghost')+' sm" data-act="clearall">'+(S.confirm==='all'?'Tap again to erase everything':'Erase all data')+'</button>':'')+'</div>';
   return h+'</div>';
@@ -472,6 +511,65 @@ function viewFolio(){
   h+='<div class="hero"><div><div class="lbl">Total invested</div><div class="big tt">'+inr(cost)+'</div></div><div class="trio" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div><span>Worth now</span><b class="tt">'+inr(val)+'</b></div><div><span>Change</span><b class="tt">'+(val-cost>=0?'+':'')+inr(val-cost)+'</b></div></div><div class="foot">Where you have not entered a current value, the amount invested is used.</div></div><div class="stack">'+allocCard(names)+cards;
   h+='<div class="card"><h3>Insurance premiums this FY</h3><div class="kv"><div><span>LIC premium</span><b class="tt">'+inr(lic)+'</b></div><div><span>Mediclaim</span><b class="tt">'+inr(med)+'</b></div></div></div></div>';
   return h;
+}
+
+/* ---------- notes ---------- */
+var NCOL=6;
+var TEMPL=[
+ {k:'Policy details',t:'note',title:'Insurance policy details',body:'Insurer:\nPolicy number:\nSum assured:\nPremium and due date:\nNominee:\nAgent phone:',color:1},
+ {k:'Monthly bills',t:'list',title:'Monthly bills',items:['Rent','Electricity','Water','Gas','Internet','Mobile recharge','School fee','Credit card bill'],color:2},
+ {k:'Shopping list',t:'list',title:'Shopping list',items:['Milk','Vegetables','Fruit','Rice and atta','Pulses'],color:0},
+ {k:'Money goals',t:'note',title:'Money goals this year',body:'1. \n2. \n3. ',color:4}
+];
+var PIN='<svg class="ic" viewBox="0 0 24 24"><path d="M12 17v5M9 3h6l-1 6 3 3v2H7v-2l3-3z"/></svg>';
+function notesList(){
+  var q=(S.nq||'').trim().toLowerCase(),f=S.nf||'all';
+  return S.cfg.notes.filter(function(n){
+    if(f==='pin'&&!n.pin)return false;if(f==='list'&&n.t!=='list')return false;
+    if(!q)return true;
+    return (n.title+' '+n.body+' '+(n.items||[]).map(function(i){return i.x}).join(' ')).toLowerCase().indexOf(q)>=0;
+  }).sort(function(a,b){return (b.pin?1:0)-(a.pin?1:0)||b.upd-a.upd});
+}
+function noteCard(n){
+  var it=n.items||[],done=it.filter(function(x){return x.done}).length;
+  var h='<div class="ncard nc'+n.color+'" role="button" tabindex="0" data-act="nedit" data-id="'+esc(n.id)+'">';
+  if(n.pin)h+='<span class="npin" aria-label="Pinned">'+PIN+'</span>';
+  if(n.title)h+='<h4>'+esc(n.title)+'</h4>';
+  if(n.t==='list'){
+    h+=it.slice(0,6).map(function(x,i){return '<button class="nchk'+(x.done?' done':'')+'" data-act="ntoggle" data-id="'+esc(n.id)+'" data-i="'+i+'" aria-pressed="'+(x.done?'true':'false')+'"><i></i><span>'+esc(x.x||'Item')+'</span></button>'}).join('');
+    if(it.length>6)h+='<small class="muted">+'+(it.length-6)+' more</small>';
+    if(it.length)h+='<div class="bar nbar"><i style="width:'+(done/it.length*100)+'%"></i></div>';
+  }else if(n.body)h+='<p>'+esc(n.body)+'</p>';
+  return h+'<div class="nmeta"><span>'+new Date(n.upd).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+'</span>'+(n.t==='list'&&it.length?'<span>'+done+'/'+it.length+' done</span>':'')+'</div></div>';
+}
+function viewNotes(){
+  var all=S.cfg.notes;
+  var h='<div class="top"><span class="brand">Notes</span><button class="btn sm" data-act="nnew">New note</button></div>';
+  if(!all.length)return h+'<div class="card empty"><h3>Keep your money notes here</h3><p class="muted">Policy numbers, bill checklists, shopping lists and yearly goals. Start from a template or write your own.</p><div class="chips" style="justify-content:center">'+TEMPL.map(function(t,i){return '<button class="chip" data-act="ntempl" data-i="'+i+'">'+esc(t.k)+'</button>'}).join('')+'</div><button class="btn" data-act="nnew">Blank note</button></div>';
+  var fl=[['all','All'],['pin','Pinned'],['list','Checklists']],l=notesList();
+  return h+'<div class="field"><label for="nq">Search notes</label><input class="in" id="nq" data-in="nq" value="'+esc(S.nq||'')+'" placeholder="Search" autocomplete="off"></div>'
+   +'<div class="sub">'+fl.map(function(x){return '<button data-act="nfil" data-v="'+x[0]+'" class="'+((S.nf||'all')===x[0]?'on':'')+'">'+x[1]+'</button>'}).join('')+'</div>'
+   +'<div class="ngrid" id="ngrid">'+(l.length?l.map(noteCard).join(''):'<p class="note">No notes match.</p>')+'</div>';
+}
+function noteSheet(n,tpl){
+  sheetKind='note';
+  if(n)F={nid:n.id,t:n.t,title:n.title||'',body:n.body||'',items:(n.items||[]).map(function(x){return {x:x.x,done:!!x.done}}),color:n.color,pin:!!n.pin,edit:true,del:false};
+  else F={t:tpl?tpl.t:'note',title:tpl?tpl.title:'',body:(tpl&&tpl.body)||'',items:((tpl&&tpl.items)||[]).map(function(x){return {x:x,done:false}}),color:tpl?tpl.color:S.cfg.notes.length%NCOL,pin:false,del:false};
+  noteSheetHtml();
+}
+function noteSheetHtml(){
+  var isList=F.t==='list',sw=[];
+  for(var i=0;i<NCOL;i++)sw.push('<button class="sw nc'+i+(F.color===i?' on':'')+'" data-act="ncolor" data-v="'+i+'" aria-label="Colour '+(i+1)+'" aria-pressed="'+(F.color===i)+'"></button>');
+  openSheet('<div class="sheet-head"><h2>'+(F.edit?'Edit note':'New note')+'</h2><button data-act="close" aria-label="Close">×</button></div>'
+   +(F.edit?'':'<div class="chips" role="group" aria-label="Templates">'+TEMPL.map(function(t,i){return '<button class="chip ghost" data-act="ntempl" data-i="'+i+'">'+esc(t.k)+'</button>'}).join('')+'</div>')
+   +'<div class="seg acc" style="grid-template-columns:repeat(2,1fr)" role="group" aria-label="Note type"><button data-act="ntype" data-v="note" class="'+(isList?'':'on')+'">Note</button><button data-act="ntype" data-v="list" class="'+(isList?'on':'')+'">Checklist</button></div>'
+   +'<div class="field"><label for="n-t">Title</label><input class="in ntitle" id="n-t" data-in="ntitle" maxlength="60" value="'+esc(F.title)+'" placeholder="Title" autocomplete="off"></div>'
+   +(isList?'<div class="field"><span class="lab">Items</span><div class="nitems">'+F.items.map(function(it,i){return '<div class="nitem"><button class="nchk'+(it.done?' done':'')+'" data-act="nitemdone" data-i="'+i+'" aria-pressed="'+(it.done?'true':'false')+'" aria-label="Mark done"><i></i></button><input class="in" data-in="nitem" data-i="'+i+'" value="'+esc(it.x)+'" maxlength="80" placeholder="Item" aria-label="Item '+(i+1)+'" autocomplete="off"><button class="xbtn" data-act="nitemdel" data-i="'+i+'" aria-label="Remove item">×</button></div>'}).join('')+'</div><button class="btn ghost sm" data-act="nitemadd">+ Add item</button></div>'
+     :'<div class="field"><label for="n-b">Note</label><textarea class="in" id="n-b" data-in="nbody" placeholder="Write here">'+esc(F.body)+'</textarea></div>')
+   +'<div class="field"><span class="lab">Colour</span><div class="swatches">'+sw.join('')+'</div></div>'
+   +'<label class="check"><input type="checkbox" id="n-pin" data-in="npin"'+(F.pin?' checked':'')+'> Pin to the top</label>'
+   +'<div class="err" id="n-err" role="alert"></div>'
+   +'<div class="btns"><button class="btn" data-act="nsave">Save note</button>'+(F.edit?'<button class="btn '+(F.del?'danger':'ghost')+'" data-act="ndel">'+(F.del?'Tap again to delete':'Delete')+'</button>':'')+'</div>');
 }
 
 /* ---------- more charts and insights ---------- */
@@ -782,7 +880,7 @@ function instSheet(c){
 var toastT=null;
 function toast(m){var t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},2600)}
 function render(){
-  var v={home:viewHome,reports:viewReports,plan:viewPlan,rem:viewRem}[S.tab]||viewHome;
+  var v={home:viewHome,reports:viewReports,plan:viewPlan,rem:viewRem,notes:viewNotes}[S.tab]||viewHome;
   $('#app').innerHTML=S.ready?v():'<p class="muted loading">Opening your diary…</p>';
   var bd=$('#bd');if(bd){var n=S.ready?remList().filter(remActive).length:0;bd.textContent=n;bd.hidden=!n}
   document.querySelectorAll('.nav [data-tab]').forEach(function(b){b.classList.toggle('on',b.dataset.tab===S.tab)});
@@ -885,6 +983,36 @@ var ACT={
     if(!('Notification' in window)){toast('Notifications are not supported here');return}
     Notification.requestPermission().then(function(p){if(p==='granted'){notifyDue();syncSchedule();toast('Notifications are on')}render()})},
   ics:function(){if(!S.cfg.rem.length){toast('Add a reminder first');return}saveFile('kharcha-reminders.ics',buildIcs())},
+  nnew:function(){noteSheet(null)},
+  ntempl:function(el){noteSheet(null,TEMPL[+el.dataset.i])},
+  nedit:function(el){var n=S.cfg.notes.filter(function(x){return x.id===el.dataset.id})[0];if(n)noteSheet(n)},
+  nfil:function(el){S.nf=el.dataset.v;render()},
+  ntoggle:function(el){
+    var n=S.cfg.notes.filter(function(x){return x.id===el.dataset.id})[0],i=+el.dataset.i;
+    if(n&&n.items&&n.items[i]){n.items[i].done=!n.items[i].done;persist([],true);render()}},
+  ntype:function(el){
+    var to=el.dataset.v;if(F.t===to)return;
+    if(to==='list'&&!F.items.length&&F.body.trim())F.items=F.body.split('\n').filter(function(s){return s.trim()}).map(function(s){return {x:s.trim(),done:false}});
+    if(to==='list'&&!F.items.length)F.items=[{x:'',done:false}];
+    if(to==='note'&&!F.body.trim()&&F.items.length)F.body=F.items.map(function(x){return x.x}).filter(Boolean).join('\n');
+    F.t=to;noteSheetHtml()},
+  ncolor:function(el){F.color=+el.dataset.v;noteSheetHtml()},
+  nitemdone:function(el){var it=F.items[+el.dataset.i];if(it){it.done=!it.done;noteSheetHtml()}},
+  nitemdel:function(el){F.items.splice(+el.dataset.i,1);noteSheetHtml()},
+  nitemadd:function(el,at){
+    var idx=typeof at==='number'?Math.min(at,F.items.length):F.items.length;
+    F.items.splice(idx,0,{x:'',done:false});noteSheetHtml();
+    var ins=document.querySelectorAll('#sheet-body [data-in="nitem"]');if(ins[idx])ins[idx].focus()},
+  nsave:function(){
+    var title=(F.title||'').trim(),body=(F.body||'').trim(),items=F.items.map(function(x){return {x:x.x.trim(),done:x.done}}).filter(function(x){return x.x});
+    if(F.t==='list'){body=''}else{items=[]}
+    if(!title&&!body&&!items.length){$('#n-err').textContent='Write a title or something in the note first.';return}
+    var now=Date.now(),obj={id:F.nid||newId(),t:F.t,title:title,body:body,items:items,color:F.color,pin:!!F.pin,upd:now};
+    if(F.edit)S.cfg.notes=S.cfg.notes.map(function(n){return n.id===obj.id?obj:n});else S.cfg.notes.unshift(obj);
+    persist([],true);closeSheet();toast('Note saved');S.tab='notes';render()},
+  ndel:function(){
+    if(!F.del){F.del=true;noteSheetHtml();return}
+    S.cfg.notes=S.cfg.notes.filter(function(n){return n.id!==F.nid});persist([],true);closeSheet();toast('Note deleted');render()},
   anotif:function(){AndroidBridge.askNotif()},
   atest:function(el){AndroidBridge.testSound(el.dataset.k)},
   apick:function(el){AndroidBridge.pickSound(el.dataset.k)},
@@ -904,6 +1032,9 @@ ACT.goaldel=function(){
   S.cfg.goals=S.cfg.goals.filter(function(x){return x.id!==F.id});persist([],true);closeSheet();toast('Goal deleted');render();
 };
 var IN={
+  ntitle:function(el){F.title=el.value},nbody:function(el){F.body=el.value},npin:function(el){F.pin=el.checked},
+  nitem:function(el){var it=F.items[+el.dataset.i];if(it)it.x=el.value},
+  nq:function(el){S.nq=el.value;var g=$('#ngrid');if(g){var l=notesList();g.innerHTML=l.length?l.map(noteCard).join(''):'<p class="note">No notes match.</p>'}},
   ahour:function(el){if(APK){AndroidBridge.setHour(+el.value);toast('Alert time saved')}},
   rname:function(el){F.name=el.value},rdue:function(el){F.due=el.value},ramt:function(el){F.amt=el.value},
   fa:function(el){F.a=el.value},fd:function(el){F.d=el.value},fn:function(el){F.n=el.value},fr:function(el){F.rep=el.checked},
@@ -919,7 +1050,12 @@ document.addEventListener('click',function(e){
 });
 document.addEventListener('input',function(e){var k=e.target.dataset&&e.target.dataset.in;if(k&&IN[k])IN[k](e.target)});
 document.addEventListener('change',function(e){var t=e.target;if(t.id==='restore'&&t.files&&t.files[0]){restoreFile(t.files[0]);t.value=''}else{var k=t.dataset&&t.dataset.in;if(k&&(k==='ft'||k==='fc'||k==='repday'))IN[k](t)}});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('#sheet').hidden)closeSheet()});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&!$('#sheet').hidden)closeSheet();
+  var d=e.target&&e.target.dataset;
+  if(e.key==='Enter'&&d&&d.in==='nitem'){e.preventDefault();ACT.nitemadd(null,+d.i+1)}
+  else if(e.key==='Enter'&&d&&d.act==='nedit')ACT.nedit(e.target);
+});
 window.__refresh=window.__soundChanged=function(){if(S.ready&&S.tab==='rem')render()};
 window.__go=function(t){S.tab=t;if(S.ready)render()};
 window.__back=function(){if(!$('#sheet').hidden){closeSheet();return true}if(S.tab!=='home'){S.tab='home';render();return true}return false};

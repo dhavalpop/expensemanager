@@ -23,6 +23,13 @@ WAY 2 - Build online with GitHub (no computer software needed)
   3. Open the Actions tab and wait for "Build Android app" to finish (about 5 minutes).
   4. Open the Releases section of the repository on your phone and tap KharchaDiary.apk.
 
+Updating later (your data is kept)
+  Every build is signed with the same key (signing/kharcha.jks), so a new APK installs over the
+  old app. Just open the new APK and tap Update. Do NOT uninstall first, because uninstalling
+  erases the app's data. As a second safety net, the app keeps a copy of your data in your
+  Downloads folder as KharchaDiary-backup.json. After an uninstall, open the app, choose
+  Restore backup, and pick that file.
+
 After installing
   - Open the app and tap Allow when it asks to send notifications.
   - Go to Reminders, add your SIP, NPS, LIC, mediclaim, insurance and fee dates, and choose how
